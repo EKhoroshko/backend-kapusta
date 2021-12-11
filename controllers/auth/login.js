@@ -6,7 +6,7 @@ const { SECRET_KEY } = process.env;
 
 const login = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { userName, email, password } = req.body;
     const user = await User.findOne({ email });
 
     if (!user || !user.verify || !user.comparePassword(password)) {
@@ -25,6 +25,8 @@ const login = async (req, res, next) => {
       data: {
         token,
         email,
+        userName,
+        id: user._id,
       },
     });
   } catch (error) {

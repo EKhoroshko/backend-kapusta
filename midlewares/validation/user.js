@@ -13,6 +13,7 @@ const userValidation = (req, res, next) => {
       .required(),
 
     password: Joi.string().min(8).required(),
+    userName: Joi.string().min(2).required(),
   });
   const validationResult = schema.validate(req.body);
   if (validationResult.error) {
