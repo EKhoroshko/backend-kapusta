@@ -23,11 +23,15 @@ const userSchema = Schema(
     },
     verify: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     verificationToken: {
       type: String,
       required: [true, "Verify token is required"],
+    },
+    balance: {
+      type: Number,
+      default: 0,
     },
   },
   { versionKey: false, timestamps: true }
