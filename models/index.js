@@ -1,5 +1,6 @@
 /* eslint-disable semi */
 /* eslint-disable quotes */
 const User = require("./user");
+const Transaction = require("./transaction");
 
-module.exports = { User };
+module.exports = { User, Transaction };
