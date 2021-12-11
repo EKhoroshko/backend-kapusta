@@ -9,7 +9,7 @@ const { v4: uuidv4 } = require("uuid");
 
 const register = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, userName } = req.body;
 
     const user = await User.findOne({ email });
     if (user) {
@@ -18,7 +18,7 @@ const register = async (req, res, next) => {
         .json({ message: `User with email: ${email} already exist` });
     }
     const verificationToken = uuidv4();
-    const newUser = new User({ email, verificationToken });
+    const newUser = new User({ email, userName, verificationToken });
     newUser.setPassword(password);
 
     await newUser.save();

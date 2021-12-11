@@ -14,6 +14,10 @@ const userSchema = Schema(
       required: [true, "Email is required"],
       unique: true,
     },
+    userName: {
+      type: String,
+      required: [true, "Name is required"],
+    },
     token: {
       type: String,
       default: null,
