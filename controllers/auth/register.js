@@ -15,7 +15,7 @@ const register = async (req, res, next) => {
     if (user) {
       res
         .status(409)
-        .json({ message: `User with email: ${email} already exist` });
+        .json({ errors: `User with email: ${email} already exist` });
     }
     const verificationToken = uuidv4();
     const newUser = new User({ email, userName, verificationToken });
