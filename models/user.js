@@ -16,7 +16,7 @@ const userSchema = Schema(
     },
     userName: {
       type: String,
-      required: [true, "Name is required"],
+      // required: [true, "Name is required"],
     },
     token: {
       type: String,
