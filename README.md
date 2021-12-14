@@ -1,8 +1,24 @@
 # AUTH ROUTERS
 
+<!-- {
+    "email":"test2@gmail.com",
+    "password": "1111111111",
+    "userName":"KKKK"
+} -->
+
 router.post("/api/auth/users/register");
+
+<!-- {
+    "email":"test2@gmail.com",
+    "password": "1111111111",
+} -->
+
 router.post("/api/auth/users/login");
+
+<!-- token -->
+
 router.get("/api/auth/users/logout";
+
 router.post("/api/auth/users/verify");
 router.get("/api/auth/users/verify:verificationToken");
 router.get("/api/auth/users/current");
@@ -36,3 +52,7 @@ router.get("/api/transactions/:transType/:year?/:month?");
 <!-- deleteTransaction -->
 
 router.delete("/api/transactions/:transactionId");
+
+### CATEGORIES ROUTERS
+
+router.get("/api/categories")
