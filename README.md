@@ -20,7 +20,7 @@ token
 router.get("/api/auth/users/logout");
 
 router.post("/api/auth/users/verify");
-router.get("/api/auth/users/verify:verificationToken");
+router.get("/api/auth/users/verify/:verificationToken");
 router.get("/api/auth/users/current");
 
 ## TRANSACTIONS ROUTERS
