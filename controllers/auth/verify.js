@@ -2,9 +2,10 @@
 /* eslint-disable quotes */
 const { User } = require("../../models");
 
-const verifyCntr = async (req, res, next) => {
+const verify = async (req, res, next) => {
   try {
     const { verificationToken } = req.params;
+    console.log(verificationToken);
     const user = await User.findOne({ verificationToken });
     if (!user) {
       res.status(404).json({ message: "User not found" });
@@ -20,4 +21,4 @@ const verifyCntr = async (req, res, next) => {
   }
 };
 
-module.exports = verifyCntr;
+module.exports = verify;
