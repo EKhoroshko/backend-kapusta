@@ -26,7 +26,7 @@ const register = async (req, res, next) => {
     const mail = {
       to: email,
       subject: "Подтверждение регистрации",
-      html: `<a href="http://localhost:${PORT}/api/auth/users/verify/${verificationToken}">
+      html: `<a href="https://back-kapusta.herokuapp.com/api/auth/users/verify/${verificationToken}">
           Перейдите по ссылке для подтверждения
         </a>`,
     };
