@@ -2,7 +2,7 @@
 /* eslint-disable quotes */
 const { User } = require("../../models");
 const sendMail = require("../../helpers/sendGrid/sendMail.js");
-const { PORT } = process.env;
+// const { PORT } = process.env;
 // const fs = require("fs/promises");
 // const path = require("path");
 const { v4: uuidv4 } = require("uuid");
@@ -25,10 +25,10 @@ const register = async (req, res, next) => {
     const mail = {
       to: email,
       subject: "Подтверждение регистрации",
-      html: `<a href="http://localhost:${PORT}/api/auth/users/verify/${verificationToken}">Перейдите по ссылке для подтверждения</a>`,
-      // html: `<a href="https://back-kapusta.herokuapp.com/api/auth/users/verify/${verificationToken}">
-      //     Перейдите по ссылке для подтверждения
-      //   </a>`,
+      // html: `<a href="http://localhost:${PORT}/api/auth/users/verify/${verificationToken}">Перейдите по ссылке для подтверждения</a>`,
+      html: `<a href="https://back-kapusta.herokuapp.com/api/auth/users/verify/${verificationToken}">
+          Перейдите по ссылке для подтверждения
+        </a>`,
     };
 
     await sendMail(mail);
