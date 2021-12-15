@@ -19,6 +19,7 @@ const verifyResending = async (req, res, next) => {
         html: `<a href="https://back-kapusta.herokuapp.com/api/auth/users/verify/${user.verificationToken}">
             Перейдите по ссылке для подтверждения
           </a>`,
+        // html: `<a href="http://localhost:3000/api/auth/users/verify/${user.verificationToken}">Перейдите по ссылке для подтверждения</a>`,
       };
 
       await sendMail(mail);
