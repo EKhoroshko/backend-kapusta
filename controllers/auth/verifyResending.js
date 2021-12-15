@@ -3,7 +3,6 @@
 
 const { User } = require("../../models");
 const sendMail = require("../../helpers/sendGrid/sendMail");
-const { PORT } = process.env;
 
 const verifyResending = async (req, res, next) => {
   try {
@@ -17,12 +16,9 @@ const verifyResending = async (req, res, next) => {
       const mail = {
         to: email,
         subject: "Подтверждение регистрации",
-        html: `<a href="http://localhost:${PORT}/api/auth/users/verify/${user.verificationToken}">
+        html: `<a href="https://back-kapusta.herokuapp.com/api/auth/users/verify/${user.verificationToken}">
             Перейдите по ссылке для подтверждения
           </a>`,
-        // html: `<a href="https://back-kapusta.herokuapp.com/api/auth/users/verify/${verificationToken}">
-        //     Перейдите по ссылке для подтверждения
-        //   </a>`,
       };
 
       await sendMail(mail);
