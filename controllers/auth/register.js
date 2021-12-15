@@ -3,9 +3,12 @@
 const { User } = require("../../models");
 const sendMail = require("../../helpers/sendGrid/sendMail.js");
 // const { PORT } = process.env;
-// const fs = require("fs/promises");
-// const path = require("path");
+const fs = require("fs/promises");
+const path = require("path");
 const { v4: uuidv4 } = require("uuid");
+
+const gravatar = require("gravatar");
+const avatarDir = path.join(__dirname, "../../public/avatars");
 
 const register = async (req, res, next) => {
   try {
@@ -17,8 +20,10 @@ const register = async (req, res, next) => {
         .status(409)
         .json({ errors: `User with email: ${email} already exist` });
     }
+
+    const avatarURL = gravatar.url(`${email}`);
     const verificationToken = uuidv4();
-    const newUser = new User({ email, userName, verificationToken });
+    const newUser = new User({ email, userName, avatarURL, verificationToken });
     newUser.setPassword(password);
     await newUser.save();
 
@@ -32,6 +37,8 @@ const register = async (req, res, next) => {
     };
 
     await sendMail(mail);
+    const avatarFolder = path.join(avatarDir, String(newUser._id));
+    await fs.mkdir(avatarFolder);
     res.status(201).json({
       newUser,
       status: "success",
