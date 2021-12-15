@@ -1,7 +1,7 @@
 /* eslint-disable semi */
 /* eslint-disable quotes */
 const { User } = require("../../models");
-const sendMail = require("../../helpers/sendGrid/sendMail");
+const sendMail = require("../../helpers/sendGrid/sendMail.js");
 const { PORT } = process.env;
 // const fs = require("fs/promises");
 // const path = require("path");
@@ -20,15 +20,15 @@ const register = async (req, res, next) => {
     const verificationToken = uuidv4();
     const newUser = new User({ email, userName, verificationToken });
     newUser.setPassword(password);
-
     await newUser.save();
 
     const mail = {
       to: email,
       subject: "Подтверждение регистрации",
-      html: `<a href="https://back-kapusta.herokuapp.com/api/auth/users/verify/${verificationToken}">
-          Перейдите по ссылке для подтверждения
-        </a>`,
+      html: `<a href="http://localhost:${PORT}/api/auth/users/verify/${verificationToken}">Перейдите по ссылке для подтверждения</a>`,
+      // html: `<a href="https://back-kapusta.herokuapp.com/api/auth/users/verify/${verificationToken}">
+      //     Перейдите по ссылке для подтверждения
+      //   </a>`,
     };
 
     await sendMail(mail);

@@ -15,6 +15,7 @@ const verify = async (req, res, next) => {
       verificationToken: null,
       verify: true,
     });
+    console.log("USERID", user._id);
     res.status(200).json({ message: "Verification successfull" });
   } catch (err) {
     next(err.message);

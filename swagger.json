@@ -1,0 +1,140 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0.0",
+    "title": "Express API for kapu$ta project",
+    "description": "The REST API for project Panel service",
+    "license": {
+      "name": "Kapu$ta",
+      "url": "https://opensource.org/licenses/Kapusta"
+    }
+  },
+  "consumes": ["application/json", "multipart/form-data"],
+  "produces": ["application/json", "multipart/form-data"],
+  "servers": [{ "url": "http://localhost:3000" }, {}],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization endpoints"
+    },
+    {
+      "name": "Transactions",
+      "description": "Transactions endpoints"
+    }
+  ],
+  "paths": {
+    "/api/auth/users/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User registration",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "User with this email already exist",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RegistrationRequest": {
+        "type": "object",
+        "required": ["email", "password", "userName"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty13"
+          },
+          "userName": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Kateryna"
+          }
+        }
+      },
+      "RegistrationResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "description": "User's email",
+              "format": "email"
+            },
+            "userName": {
+              "type": "string",
+              "description": "User's name",
+              "example": "Kateryna"
+            },
+            "_id": {
+              "type": "number",
+              "description": "User's id",
+              "example": "32143232436545474"
+            },
+            "verificationToken": {
+              "type": "string",
+              "description": "User's verificationToken",
+              "example": "d4231c1c-019e-4465-9371-0c3b83e48087"
+            }
+          }
+        },
+        "example": [
+          {
+            "email": "1@gmail.com",
+            "_id": "1",
+            "userName": "Usertest",
+            "verificationToken": "d4231c1c-019e-4465-9371-0c3b83e48087"
+          },
+          {
+            "email": "2@gmail.com",
+            "_id": "2",
+            "userName": "UserTest",
+            "verificationToken": "d4231c1c-019e-4465-9371-0c3b83e55555"
+          }
+        ]
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
