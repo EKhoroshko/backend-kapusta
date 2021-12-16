@@ -7,11 +7,11 @@ const getCurrenUser = async (req, res, next) => {
   console.log("hello");
 
   try {
-    const token = req.headers.token;
+    const token = req.user;
 
-    console.log(token);
+    // console.log(token);
 
-    const user = await User.findOne({ token });
+    const user = await User.findOne(token);
 
     if (!user) {
       res.status(401).json({ message: "Invalid token" });

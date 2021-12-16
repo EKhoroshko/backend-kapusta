@@ -20,7 +20,7 @@ router.get("/users/logout", authValidation, logout);
 
 router.post("/users/verify", verifyValidation, verifyResending);
 router.get("/users/verify/:verificationToken", verify);
-router.get("/users/current", getCurrenUser);
+router.get("/users/current", authValidation, getCurrenUser);
 
 router.patch(
   "/users/avatars",
