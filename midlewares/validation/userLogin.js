@@ -3,7 +3,7 @@
 
 const Joi = require("joi");
 
-const userValidation = (req, res, next) => {
+const userLogin = (req, res, next) => {
   const schema = Joi.object({
     email: Joi.string()
       .email({
@@ -13,7 +13,7 @@ const userValidation = (req, res, next) => {
       .required(),
 
     password: Joi.string().min(8).required(),
-    userName: Joi.string().min(2).required(),
+    userName: Joi.string().min(2),
   });
   const validationResult = schema.validate(req.body);
   if (validationResult.error) {
@@ -27,4 +27,4 @@ const userValidation = (req, res, next) => {
   next();
 };
 
-module.exports = { userValidation };
+module.exports = { userLogin };

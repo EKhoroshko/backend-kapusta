@@ -9,10 +9,13 @@ const addTransaction = require("../../controllers/transactions/addTransaction");
 const deleteTransaction = require("../../controllers/transactions/deleteTransaction");
 const getCostsIncomesTrans = require("../../controllers/transactions/getCostsIncomesTrans");
 const getAllTransactions = require("../../controllers/transactions/getAllTransactions");
+const {
+  transactionsValidate,
+} = require("../../midlewares/validation/transactionsValidate");
 
 router.use(authValidation); //все рауты пропускаю чз аутентификацию
 router.patch("/:userId", updateBalance);
-router.post("/:transType", addTransaction);
+router.post("/", transactionsValidate, addTransaction);
 router.get("/all", getAllTransactions);
 router.get("/:transType/:year?/:month?", getCostsIncomesTrans);
 
