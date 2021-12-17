@@ -11,14 +11,12 @@ const addTransaction = async (req, res, next) => {
     const currentMonth = date.getMonth() + 1;
     const currentYear = date.getFullYear();
 
-    const { transType } = req.params;
-    console.log(transType);
     const updatedNewTransaction = {
       ...req.body,
       date: currentDate,
       month: currentMonth,
       year: currentYear,
-      transactionType: transType,
+
       owner: req.user._id,
     };
     const newTransaction = await Transaction.create(updatedNewTransaction);

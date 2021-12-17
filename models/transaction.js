@@ -27,6 +27,7 @@ const transactionSchema = Schema(
     },
     transactionType: {
       type: String,
+      required: [true, "Sum is required"],
       enum: ["incomes", "costs"],
     },
     owner: {

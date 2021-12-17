@@ -30,10 +30,10 @@ updateBalance
 router.patch("/api/transactions/:userId");
 
 addTransaction
-/api/transactions/costs;
-/api/transactions/incomes;
+/api/transactions/;
 
-router.post("/api/transactions/:transType");
+router.post("/api/transactions/");
+(обязательно нужно добавлять transactionType в боди)
 
 getAllTransactions
 

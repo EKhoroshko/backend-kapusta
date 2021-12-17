@@ -3,17 +3,12 @@
 
 const Joi = require("joi");
 
-const userValidation = (req, res, next) => {
+const transactionsValidate = (req, res, next) => {
   const schema = Joi.object({
-    email: Joi.string()
-      .email({
-        minDomainSegments: 2,
-        tlds: { allow: ["com", "org", "uk", "net", "ua", "ru"] },
-      })
-      .required(),
+    sum: Joi.number().required(),
 
-    password: Joi.string().min(8).required(),
-    userName: Joi.string().min(2).required(),
+    category: Joi.string().required(),
+    transactionType: Joi.string().required(),
   });
   const validationResult = schema.validate(req.body);
   if (validationResult.error) {
@@ -27,4 +22,4 @@ const userValidation = (req, res, next) => {
   next();
 };
 
-module.exports = { userValidation };
+module.exports = { transactionsValidate };

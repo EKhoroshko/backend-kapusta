@@ -1,5 +1,6 @@
 /* eslint-disable semi */
 /* eslint-disable quotes */
+const { BASE_URL } = process.env;
 
 const { User } = require("../../models");
 const sendMail = require("../../helpers/sendGrid/sendMail");
@@ -16,10 +17,9 @@ const verifyResending = async (req, res, next) => {
       const mail = {
         to: email,
         subject: "Подтверждение регистрации",
-        html: `<a href="https://back-kapusta.herokuapp.com/api/auth/users/verify/${user.verificationToken}">
+        html: `<a href="${BASE_URL}/api/auth/users/verify/${user.verificationToken}">
             Перейдите по ссылке для подтверждения
           </a>`,
-        // html: `<a href="http://localhost:3000/api/auth/users/verify/${user.verificationToken}">Перейдите по ссылке для подтверждения</a>`,
       };
 
       await sendMail(mail);

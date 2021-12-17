@@ -4,14 +4,10 @@
 const { User } = require("../../models");
 
 const getCurrenUser = async (req, res, next) => {
-  console.log("hello");
-
   try {
-    const token = req.user;
+    const token = req.user.token;
 
-    // console.log(token);
-
-    const user = await User.findOne(token);
+    const user = await User.findOne({ token });
 
     if (!user) {
       res.status(401).json({ message: "Invalid token" });
