@@ -25,6 +25,8 @@ const getCurrenUser = async (req, res, next) => {
         email: user.email,
         userName: user.userName,
         id: user._id,
+        balance: user.balance,
+        avatarURL: user.avatarURL,
       },
     });
   } catch (error) {
