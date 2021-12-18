@@ -10,7 +10,7 @@ const updateBalance = async (req, res, next) => {
       new: true,
     });
     if (!result) {
-      res.status(404).json({ message: `Balance was successfully update` });
+      res.status(404).json({ message: `Not found` });
     }
     res.json({
       status: "success",
