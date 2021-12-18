@@ -20,6 +20,10 @@
     {
       "name": "Transactions",
       "description": "Transactions endpoints"
+    },
+    {
+      "name": "Categories",
+      "description": "Collection"
     }
   ],
   "paths": {
@@ -28,7 +32,6 @@
         "tags": ["Auth"],
         "summary": "User registration",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "Registration's object",
           "required": true,
@@ -57,6 +60,112 @@
           },
           "409": {
             "description": "User with this email already exist",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/auth/users/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User login",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Login's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "401": {
+            "description": "Email or password is wrong",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/auth/users/logout": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "User logout",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Logout's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogoutRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Successful operation"
+          },
+          "500": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/auth/users/current": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Current user",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Current object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CurrentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "401": {
+            "description": "Email or password is wrong",
             "content": {}
           }
         }
@@ -106,10 +215,20 @@
               "description": "User's id",
               "example": "32143232436545474"
             },
-            "verificationToken": {
+            "token": {
+              "type": "null",
+              "description": "User's token",
+              "example": "null"
+            },
+            "avatarURL": {
               "type": "string",
-              "description": "User's verificationToken",
-              "example": "d4231c1c-019e-4465-9371-0c3b83e48087"
+              "description": "User's avatar",
+              "example": "//www.gravatar.com/avatar/ef1298986e57b63d10572a714ad4a999"
+            },
+            "balance": {
+              "type": "integer",
+              "description": "User's balance",
+              "example": "5000"
             }
           }
         },
@@ -118,23 +237,147 @@
             "email": "1@gmail.com",
             "_id": "1",
             "userName": "Usertest",
-            "verificationToken": "d4231c1c-019e-4465-9371-0c3b83e48087"
+            "token": null,
+            "avatarURL": "//www.gravatar.com/avatar/ef1298986e57b63d10572a714ad4a999",
+            "balance": "5000"
+          }
+        ]
+      },
+
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
           },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty13"
+          },
+          "userName": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Kateryna"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "description": "User's email",
+              "format": "email"
+            },
+            "userName": {
+              "type": "string",
+              "description": "User's name",
+              "example": "Kateryna"
+            },
+            "_id": {
+              "type": "number",
+              "description": "User's id",
+              "example": "32143232436545474"
+            },
+            "token": {
+              "type": "string",
+              "description": "User's token",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxYmE2MmM2MzI0Zjk4ZTY1MjYwYWNjOCIsImlhdCI6MTYzOTc3OTM3MiwiZXhwIjoxNjM5NzgyOTcyfQ.VqrwcGgyQ262vo-SEpr9MlEbVU2k8HHFGbx9AxbFX10",
+              "avatarURL": {
+                "type": "string",
+                "description": "User's avatar",
+                "example": "//www.gravatar.com/avatar/ef1298986e57b63d10572a714ad4a999"
+              },
+              "balance": {
+                "type": "integer",
+                "description": "User's balance",
+                "example": "5000"
+              }
+            }
+          }
+        },
+
+        "example": [
           {
-            "email": "2@gmail.com",
-            "_id": "2",
-            "userName": "UserTest",
-            "verificationToken": "d4231c1c-019e-4465-9371-0c3b83e55555"
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxYmU0MGJjMjVhOGMzNTc4MmM2M2I0YyIsImlhdCI6MTYzOTg1OTAzNywiZXhwIjoxNjM5ODYyNjM3fQ.tXE3Krhl_mvKc7HbmAbHyqurCnaRnxv28ap1eZyal1w",
+            "email": "adida@gmail.com",
+            "userName": "dima",
+            "id": "61be40bc25a8c35782c63b4c",
+            "balance": 0,
+            "avatarURL": "//www.gravatar.com/avatar/ef1298986e57b63d10572a714ad4a999"
+          }
+        ]
+      },
+      "LogoutRequest": {
+        "type": "object",
+        "required": ["token"]
+      },
+      "CurrentRequest": {
+        "type": "object",
+        "required": ["token"]
+      },
+      "CurrentResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "description": "User's email",
+              "format": "email"
+            },
+            "userName": {
+              "type": "string",
+              "description": "User's name",
+              "example": "Kateryna"
+            },
+            "_id": {
+              "type": "number",
+              "description": "User's id",
+              "example": "32143232436545474"
+            },
+            "token": {
+              "type": "string",
+              "description": "User's token",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxYmE2MmM2MzI0Zjk4ZTY1MjYwYWNjOCIsImlhdCI6MTYzOTc3OTM3MiwiZXhwIjoxNjM5NzgyOTcyfQ.VqrwcGgyQ262vo-SEpr9MlEbVU2k8HHFGbx9AxbFX10",
+              "avatarURL": {
+                "type": "string",
+                "description": "User's avatar",
+                "example": "//www.gravatar.com/avatar/ef1298986e57b63d10572a714ad4a999"
+              },
+              "balance": {
+                "type": "integer",
+                "description": "User's balance",
+                "example": "5000"
+              }
+            }
+          }
+        },
+
+        "example": [
+          {
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxYmU0MGJjMjVhOGMzNTc4MmM2M2I0YyIsImlhdCI6MTYzOTg1OTAzNywiZXhwIjoxNjM5ODYyNjM3fQ.tXE3Krhl_mvKc7HbmAbHyqurCnaRnxv28ap1eZyal1w",
+            "email": "adida@gmail.com",
+            "userName": "dima",
+            "id": "61be40bc25a8c35782c63b4c",
+            "balance": 0,
+            "avatarURL": "//www.gravatar.com/avatar/ef1298986e57b63d10572a714ad4a999"
           }
         ]
       }
-    },
-    "securitySchemes": {
-      "Bearer": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
-      }
+    }
+  },
+  "securitySchemes": {
+    "Bearer": {
+      "type": "http",
+      "scheme": "bearer",
+      "bearerFormat": "JWT"
     }
   }
 }
