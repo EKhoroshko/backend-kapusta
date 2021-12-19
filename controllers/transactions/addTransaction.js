@@ -7,14 +7,33 @@ const addTransaction = async (req, res, next) => {
   try {
     const date = new Date();
     const currentDate = date.toLocaleDateString();
-    console.log(typeof currentDate);
+    //console.log(typeof currentDate);
     const currentMonth = date.getMonth() + 1;
+    const month = [
+      "Январь",
+      "Февраль",
+      "Март",
+      "Апрель",
+      "Май",
+      "Июнь",
+      "Июль",
+      "Август",
+      "Сентябрь",
+      "Октябрь",
+      "Ноябрь",
+      "Декабрь",
+    ];
+
+    const nowMonth = month[date.getMonth()];
+    //console.log("MMMMMMMMMMMM", nowMonth);
+
     const currentYear = date.getFullYear();
 
     const updatedNewTransaction = {
       ...req.body,
       date: currentDate,
       month: currentMonth,
+      monthString: nowMonth,
       year: currentYear,
 
       owner: req.user._id,

@@ -11,16 +11,38 @@ const getCostsIncomesTrans = async (req, res, next) => {
     const currentDate = date.toLocaleDateString();
     console.log(typeof currentDate);
     const currentMonth = date.getMonth() + 1;
+    const months = [
+      "Январь",
+      "Февраль",
+      "Март",
+      "Апрель",
+      "Май",
+      "Июнь",
+      "Июль",
+      "Август",
+      "Сентябрь",
+      "Октябрь",
+      "Ноябрь",
+      "Декабрь",
+    ];
+
+    const nowMonth = months[date.getMonth()];
     const currentYear = date.getFullYear();
     //const { page, limit } = req.query;
     const { _id } = req.user;
-    const { transType, month = currentMonth, year = currentYear } = req.params;
+    const {
+      transType,
+      month = currentMonth,
+      monthString = nowMonth,
+      year = currentYear,
+    } = req.params;
     //const skip = (page - 1) * limit;
 
     const transaction = await Transaction.find({
       owner: _id,
       transactionType: transType,
       month: +month,
+      monthString,
       year: +year,
     });
 

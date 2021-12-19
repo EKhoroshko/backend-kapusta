@@ -18,6 +18,9 @@ const transactionSchema = Schema(
     month: {
       type: Number,
     },
+    monthString: {
+      type: String,
+    },
     year: {
       type: Number,
     },
