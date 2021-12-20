@@ -113,17 +113,6 @@
         "summary": "User logout",
         "parameters": [],
         "security": [{ "Bearer": [] }],
-        "requestBody": {
-          "description": "Logout's object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LogoutRequest"
-              }
-            }
-          }
-        },
         "responses": {
           "204": {
             "description": "Successful operation"
@@ -207,7 +196,7 @@
         }
       }
     },
-    "/api/transactions/": {
+    "/api/transactions": {
       "post": {
         "tags": ["Transactions"],
         "summary": "Add transaction",
@@ -258,33 +247,23 @@
         }
       }
     },
-    "/api/transactions/:transactionId": {
+    "/api/transactions/{transactionId}": {
       "delete": {
         "tags": ["Transactions"],
         "summary": "Delete transaction",
-        "parameters": [],
-        "security": [{ "Bearer": [] }],
-        "requestBody": {
-          "description": "Delete transactions object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DeleteTransactionsRequest"
-              }
-            }
+        "parameters": [
+          {
+            "name": "transactionId",
+            "in": "path",
+            "required": "true",
+            "type": "string",
+            "description": "transaction Id"
           }
-        },
+        ],
+        "security": [{ "Bearer": [] }],
         "responses": {
           "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DeleteTransactionsResponse"
-                }
-              }
-            }
+            "description": "Successful operation"
           },
           "404": {
             "description": "Not found",
@@ -293,23 +272,35 @@
         }
       }
     },
-    "/api/transactions/:transactionType/:year?/:month?": {
+    "/api/transactions/{transactionType}/{year}/{month}": {
       "get": {
         "tags": ["Transactions"],
         "summary": "Get transactions by transactionType(required)/year/month ",
-        "parameters": [],
-        "security": [{ "Bearer": [] }],
-        "requestBody": {
-          "description": "Get transactions object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GetTransactionsRequest"
-              }
-            }
+        "parameters": [
+          {
+            "name": "transactionType",
+            "in": "path",
+            "required": "true",
+            "type": "string",
+            "description": "transactions type"
+          },
+          {
+            "name": "year",
+            "in": "path",
+            "type": "string",
+            "description": "transactions year",
+            "default": "2021"
+          },
+          {
+            "name": "month",
+            "in": "path",
+            "type": "string",
+            "description": "transaction month",
+            "default": "12"
           }
-        },
+        ],
+        "security": [{ "Bearer": [] }],
+
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -467,10 +458,6 @@
           }
         ]
       },
-      "LogoutRequest": {
-        "type": "object",
-        "required": ["token"]
-      },
       "CurrentResponse": {
         "type": "array",
         "items": {
@@ -567,43 +554,16 @@
             }
           }
         }
-      }
-    },
-    "AddTransactionRequest": {
-      "type": "object",
-      "required": [
-        "sum",
-        "category",
-        "description",
-        "transactionType",
-        "token"
-      ],
-      "properties": {
-        "sum": {
-          "type": "integer",
-          "description": "Transaction sum"
-        },
-        "category": {
-          "type": "string",
-          "description": "Name of category",
-          "example": "Продукты"
-        },
-        "description": {
-          "type": "string",
-          "description": "Transaction description",
-          "example": "Хлеб"
-        },
-        "transactionType": {
-          "type": "string",
-          "description": "costs/incomes",
-          "example": "costs"
-        }
-      }
-    },
-    "AddTransactionResponse": {
-      "type": "array",
-      "items": {
+      },
+      "AddTransactionRequest": {
         "type": "object",
+        "required": [
+          "sum",
+          "category",
+          "description",
+          "transactionType",
+          "token"
+        ],
         "properties": {
           "sum": {
             "type": "integer",
@@ -623,121 +583,224 @@
             "type": "string",
             "description": "costs/incomes",
             "example": "costs"
-          },
-          "owner": {
-            "type": "string",
-            "description": "Users ID",
-            "example": "61be40bc25a8c35782c63b4c"
-          },
-          "date": {
-            "type": "string",
-            "description": "Transaction date",
-            "example": "18.12.2021"
-          },
-          "_id": {
-            "type": "string",
-            "description": "User's id",
-            "example": "32143232436545474"
-          },
-          "month": {
-            "type": "integer",
-            "description": "Transaction month",
-            "example": "12"
-          },
-          "year": {
-            "type": "integer",
-            "description": "Transaction year",
-            "example": "2021"
           }
         }
       },
-
-      "example": [
-        {
-          "category": "products",
-          "description": "cola",
-          "date": "18.12.2021",
-          "month": 12,
-          "year": 2021,
-          "sum": 900,
-          "transactionType": "costs",
-          "owner": "61ba62c6324f98e65260acc8",
-          "_id": "61be5316d00f886a66c23045"
-        }
-      ]
-    },
-    "GetAllTransactionsResponse": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "sum": {
-            "type": "integer",
-            "description": "Transaction sum"
-          },
-          "category": {
-            "type": "string",
-            "description": "Name of category",
-            "example": "Продукты"
-          },
-          "description": {
-            "type": "string",
-            "description": "Transaction description",
-            "example": "Хлеб"
-          },
-          "transactionType": {
-            "type": "string",
-            "description": "costs/incomes",
-            "example": "costs"
-          },
-          "owner": {
-            "type": "string",
-            "description": "Users ID",
-            "example": "61be40bc25a8c35782c63b4c"
-          },
-          "date": {
-            "type": "string",
-            "description": "Transaction date",
-            "example": "18.12.2021"
-          },
-          "_id": {
-            "type": "string",
-            "description": "User's id",
-            "example": "32143232436545474"
-          },
-          "month": {
-            "type": "integer",
-            "description": "Transaction month",
-            "example": "12"
-          },
-          "year": {
-            "type": "integer",
-            "description": "Transaction year",
-            "example": "2021"
+      "AddTransactionResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "sum": {
+              "type": "integer",
+              "description": "Transaction sum"
+            },
+            "category": {
+              "type": "string",
+              "description": "Name of category",
+              "example": "Продукты"
+            },
+            "description": {
+              "type": "string",
+              "description": "Transaction description",
+              "example": "Хлеб"
+            },
+            "transactionType": {
+              "type": "string",
+              "description": "costs/incomes",
+              "example": "costs"
+            },
+            "owner": {
+              "type": "string",
+              "description": "Users ID",
+              "example": "61be40bc25a8c35782c63b4c"
+            },
+            "date": {
+              "type": "string",
+              "description": "Transaction date",
+              "example": "18.12.2021"
+            },
+            "_id": {
+              "type": "string",
+              "description": "User's id",
+              "example": "32143232436545474"
+            },
+            "month": {
+              "type": "integer",
+              "description": "Transaction month",
+              "example": "12"
+            },
+            "monthString": {
+              "type": "string",
+              "description": "Transaction month",
+              "example": "Декабрь"
+            },
+            "year": {
+              "type": "integer",
+              "description": "Transaction year",
+              "example": "2021"
+            }
           }
-        }
-      },
+        },
 
-      "example": [
-        {
-          "category": "products",
-          "description": "cola",
-          "date": "18.12.2021",
-          "month": 12,
-          "year": 2021,
-          "sum": 900,
-          "transactionType": "costs",
-          "owner": "61ba62c6324f98e65260acc8",
-          "_id": "61be5316d00f886a66c23045"
-        }
-      ],
-      "DeleteTransactionsRequest": {
-        "type": "object",
-        "required": ["token"]
+        "example": [
+          {
+            "category": "products",
+            "description": "cola",
+            "date": "18.12.2021",
+            "month": 12,
+            "year": 2021,
+            "sum": 900,
+            "transactionType": "costs",
+            "owner": "61ba62c6324f98e65260acc8",
+            "_id": "61be5316d00f886a66c23045"
+          }
+        ]
       },
-      "GetTransactionsRequest": {
-        "type": "object",
-        "required": ["token"]
+      "GetAllTransactionsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "sum": {
+              "type": "integer",
+              "description": "Transaction sum"
+            },
+            "category": {
+              "type": "string",
+              "description": "Name of category",
+              "example": "Продукты"
+            },
+            "description": {
+              "type": "string",
+              "description": "Transaction description",
+              "example": "Хлеб"
+            },
+            "transactionType": {
+              "type": "string",
+              "description": "costs/incomes",
+              "example": "costs"
+            },
+            "owner": {
+              "type": "string",
+              "description": "Users ID",
+              "example": "61be40bc25a8c35782c63b4c"
+            },
+            "date": {
+              "type": "string",
+              "description": "Transaction date",
+              "example": "18.12.2021"
+            },
+            "_id": {
+              "type": "string",
+              "description": "User's id",
+              "example": "32143232436545474"
+            },
+            "month": {
+              "type": "integer",
+              "description": "Transaction month",
+              "example": "12"
+            },
+            "monthString": {
+              "type": "string",
+              "description": "Transaction month",
+              "example": "Декабрь"
+            },
+            "year": {
+              "type": "integer",
+              "description": "Transaction year",
+              "example": "2021"
+            }
+          }
+        },
+
+        "example": [
+          {
+            "category": "products",
+            "description": "cola",
+            "date": "18.12.2021",
+            "month": 12,
+            "year": 2021,
+            "sum": 900,
+            "transactionType": "costs",
+            "owner": "61ba62c6324f98e65260acc8",
+            "_id": "61be5316d00f886a66c23045"
+          }
+        ],
+        "DeleteTransactionsRequest": {
+          "type": "object",
+          "required": ["token"]
+        },
+        "GetTransactionsRequest": {
+          "type": "object",
+          "required": ["token"]
+        },
+        "GetTransactionsResponse": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "sum": {
+                "type": "integer",
+                "description": "Transaction sum"
+              },
+              "category": {
+                "type": "string",
+                "description": "Name of category",
+                "example": "Продукты"
+              },
+              "description": {
+                "type": "string",
+                "description": "Transaction description",
+                "example": "Хлеб"
+              },
+              "transactionType": {
+                "type": "string",
+                "description": "costs/incomes",
+                "example": "costs"
+              },
+              "owner": {
+                "type": "string",
+                "description": "Users ID",
+                "example": "61be40bc25a8c35782c63b4c"
+              },
+              "date": {
+                "type": "string",
+                "description": "Transaction date",
+                "example": "18.12.2021"
+              },
+              "_id": {
+                "type": "string",
+                "description": "User's id",
+                "example": "32143232436545474"
+              },
+              "month": {
+                "type": "integer",
+                "description": "Transaction month",
+                "example": "12"
+              },
+              "year": {
+                "type": "integer",
+                "description": "Transaction year",
+                "example": "2021"
+              }
+            }
+          },
+
+          "example": [
+            {
+              "category": "products",
+              "description": "cola",
+              "date": "18.12.2021",
+              "month": 12,
+              "year": 2021,
+              "sum": 900,
+              "transactionType": "costs",
+              "owner": "61ba62c6324f98e65260acc8",
+              "_id": "61be5316d00f886a66c23045"
+            }
+          ]
+        }
       },
       "GetTransactionsResponse": {
         "type": "array",
@@ -783,6 +846,11 @@
               "description": "Transaction month",
               "example": "12"
             },
+            "monthString": {
+              "type": "string",
+              "description": "Transaction month",
+              "example": "Декабрь"
+            },
             "year": {
               "type": "integer",
               "description": "Transaction year",
@@ -803,7 +871,81 @@
             "owner": "61ba62c6324f98e65260acc8",
             "_id": "61be5316d00f886a66c23045"
           }
-        ]
+        ],
+        "DeleteTransactionsRequest": {
+          "type": "object",
+          "required": ["token"]
+        },
+        "GetTransactionsRequest": {
+          "type": "object",
+          "required": ["token"]
+        },
+        "GetTransactionsResponse": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "sum": {
+                "type": "integer",
+                "description": "Transaction sum"
+              },
+              "category": {
+                "type": "string",
+                "description": "Name of category",
+                "example": "Продукты"
+              },
+              "description": {
+                "type": "string",
+                "description": "Transaction description",
+                "example": "Хлеб"
+              },
+              "transactionType": {
+                "type": "string",
+                "description": "costs/incomes",
+                "example": "costs"
+              },
+              "owner": {
+                "type": "string",
+                "description": "Users ID",
+                "example": "61be40bc25a8c35782c63b4c"
+              },
+              "date": {
+                "type": "string",
+                "description": "Transaction date",
+                "example": "18.12.2021"
+              },
+              "_id": {
+                "type": "string",
+                "description": "User's id",
+                "example": "32143232436545474"
+              },
+              "month": {
+                "type": "integer",
+                "description": "Transaction month",
+                "example": "12"
+              },
+              "year": {
+                "type": "integer",
+                "description": "Transaction year",
+                "example": "2021"
+              }
+            }
+          },
+
+          "example": [
+            {
+              "category": "products",
+              "description": "cola",
+              "date": "18.12.2021",
+              "month": 12,
+              "year": 2021,
+              "sum": 900,
+              "transactionType": "costs",
+              "owner": "61ba62c6324f98e65260acc8",
+              "_id": "61be5316d00f886a66c23045"
+            }
+          ]
+        }
       }
     },
     "securitySchemes": {
