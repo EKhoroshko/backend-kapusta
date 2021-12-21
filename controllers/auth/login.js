@@ -8,7 +8,6 @@ const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
-    console.log(res.headers);
     if (!user || !user.verify || !user.comparePassword(password)) {
       res.status(401).json({ errors: "Email or password is wrong" });
     }
