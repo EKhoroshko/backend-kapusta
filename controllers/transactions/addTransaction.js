@@ -7,7 +7,6 @@ const addTransaction = async (req, res, next) => {
   try {
     const date = new Date();
     const currentDate = date.toLocaleDateString();
-    //console.log(typeof currentDate);
     const currentMonth = date.getMonth() + 1;
     const month = [
       "Январь",
@@ -25,10 +24,7 @@ const addTransaction = async (req, res, next) => {
     ];
 
     const nowMonth = month[date.getMonth()];
-    //console.log("MMMMMMMMMMMM", nowMonth);
-
     const currentYear = date.getFullYear();
-
     const updatedNewTransaction = {
       ...req.body,
       date: currentDate,

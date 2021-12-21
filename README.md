@@ -1,4 +1,8 @@
-# AUTH ROUTERS
+# Swagger
+
+<http://localhost:3000/api-docs/#/>
+
+## AUTH ROUTERS
 
 {
 "email":"test2@gmail.com",
@@ -23,7 +27,7 @@ router.post("/api/auth/users/verify");
 router.get("/api/auth/users/verify/:verificationToken");
 router.get("/api/auth/users/current");
 
-## TRANSACTIONS ROUTERS
+### TRANSACTIONS ROUTERS
 
 updateBalance
 
@@ -54,6 +58,6 @@ deleteTransaction
 
 router.delete("/api/transactions/:transactionId");
 
-### CATEGORIES ROUTERS
+#### CATEGORIES ROUTERS
 
 router.get("/api/categories")

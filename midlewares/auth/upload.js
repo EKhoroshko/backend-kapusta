@@ -4,8 +4,7 @@
 /* eslint-disable semi */
 const multer = require("multer");
 const path = require("path");
-const tempDir = path.join(__dirname, "../", "temp"); // + "../" - to find tmp Folder
-// console.log(tempDir);
+const tempDir = path.join(__dirname, "../", "temp");
 
 const uploadConfig = multer.diskStorage({
   distination: (req, file, cb) => {
@@ -14,9 +13,9 @@ const uploadConfig = multer.diskStorage({
   filename: (req, file, cb) => {
     cb(null, file.originalname);
   },
-  //   limits: {
-  //     fileSize: 2048,
-  //   },
+  // limits: {
+  //   fileSize: 2048,
+  // },
 });
 
 const upload = multer({

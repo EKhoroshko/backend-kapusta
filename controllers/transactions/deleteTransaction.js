@@ -9,7 +9,6 @@ const deleteTransaction = async (req, res, next) => {
     const removedTransaction = await Transaction.findByIdAndRemove(
       req.params.transactionId
     );
-    console.log(req.params.transactionId);
     if (!removedTransaction) {
       res.status(404).json({ message: "No such transaction" });
     }
