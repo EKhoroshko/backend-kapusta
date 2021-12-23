@@ -2,7 +2,8 @@
 /* eslint-disable quotes */
 const { User } = require("../../models");
 const sendMail = require("../../helpers/sendGrid/sendMail.js");
-const { BASE_URL } = process.env;
+// const { BASE_URL } = process.env;
+const { FRONTEND_URL } = process.env;
 const fs = require("fs/promises");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
@@ -30,8 +31,8 @@ const register = async (req, res, next) => {
     const mail = {
       to: email,
       subject: "Подтверждение регистрации",
-      html: `<a href="${BASE_URL}/api/auth/users/verify/${verificationToken}">
-          Перейдите по ссылке для подтверждения
+      html: `<a href="${FRONTEND_URL}/${verificationToken}">
+          Спасибо, что зарегистрировались. Перейдите пожалуйста по данной ссылке для подтверждения имейла
         </a>`,
     };
 
