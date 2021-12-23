@@ -2,7 +2,6 @@
 /* eslint-disable quotes */
 const { User } = require("../../models");
 const sendMail = require("../../helpers/sendGrid/sendMail.js");
-// const { BASE_URL } = process.env;
 const { FRONTEND_URL } = process.env;
 const fs = require("fs/promises");
 const path = require("path");

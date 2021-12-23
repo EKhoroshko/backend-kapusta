@@ -1,16 +1,14 @@
 /* eslint-disable spaced-comment */
 /* eslint-disable semi */
 /* eslint-disable quotes */
-//const { User } = require("../../models");
 const queryString = require("query-string");
-//const axios = require("axios");
-//const URL = require("url");
+const { BASE_URL } = process.env;
 
 const googleAuth = async (req, res, next) => {
   try {
     const stringifiedParams = queryString.stringify({
       client_id: process.env.GOOGLE_CLIENT_ID,
-      redirect_uri: `http://localhost:3000/api/auth/google-redirect`,
+      redirect_uri: `${BASE_URL}/api/auth/google-redirect`,
       scope: [
         "https://www.googleapis.com/auth/userinfo.email",
         "https://www.googleapis.com/auth/userinfo.profile",
