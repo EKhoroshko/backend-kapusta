@@ -43,7 +43,7 @@ const googleRedirect = async (req, res, next) => {
       };
       const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "24h" });
       await User.findByIdAndUpdate(user._id, { token });
-      return res.redirect(`${FRONTEND_URL}/home?token=${token}`);
+      return res.redirect(`${FRONTEND_URL}?token=${token}`);
     } else {
       const avatarURL = gravatar.url(`${email}`);
       const newUser = await User.create({
@@ -59,7 +59,7 @@ const googleRedirect = async (req, res, next) => {
       await User.findByIdAndUpdate(newUser._id, token)
       const avatarFolder = path.join(avatarDir, String(newUser._id));
       await fs.mkdir(avatarFolder);
-      return res.redirect(`${FRONTEND_URL}/home?token=${token}`);
+      return res.redirect(`${FRONTEND_URL}?token=${token}`);
     }
   } catch (error) {
     next(error.message);
