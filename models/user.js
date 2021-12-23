@@ -7,7 +7,7 @@ const userSchema = Schema(
   {
     password: {
       type: String,
-      required: [true, "Password is required"],
+      //required: [true, "Password is required"],
     },
     email: {
       type: String,
@@ -31,7 +31,7 @@ const userSchema = Schema(
     },
     verificationToken: {
       type: String,
-      required: [true, "Verify token is required"],
+      //  required: [true, "Verify token is required"],
     },
     balance: {
       type: Number,

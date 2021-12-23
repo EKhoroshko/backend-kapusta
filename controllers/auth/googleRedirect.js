@@ -5,10 +5,9 @@ const { User } = require("../../models");
 const { SECRET_KEY } = process.env;
 const queryString = require("query-string");
 const axios = require("axios");
-const { BASE_URL } = process.env;
+const { BASE_URL, FRONTEND_URL } = process.env;
 const fs = require("fs/promises");
 const path = require("path");
-const { v4: uuidv4 } = require("uuid");
 const gravatar = require("gravatar");
 const avatarDir = path.join(__dirname, "../../public/avatars");
 
@@ -36,35 +35,31 @@ const googleRedirect = async (req, res, next) => {
         Authorization: `Bearer ${tokenData.data.access_token}`,
       },
     });
-    console.log(userData.data);
     const { email } = userData.data;
     const user = await User.findOne({ email });
-    if (user && user.verify) {
+    if (user) {
       const payload = {
         id: user._id,
       };
       const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "24h" });
       await User.findByIdAndUpdate(user._id, { token });
-      return res.redirect(`${process.env.FRONTEND_URL}/home?token=${token}`);
+      return res.redirect(`${FRONTEND_URL}?token=${token}`);
     } else {
       const avatarURL = gravatar.url(`${email}`);
-      const verificationToken = uuidv4();
-      const payload = {
-        id: userData.data.id,
-      };
-      const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "24h" });
-      const newUser = new User({
+      const newUser = await User.create({
         email: userData.data.email,
         userName: userData.data.name,
         avatarURL,
-        verificationToken,
         verify: true,
-        token,
       });
-      await newUser.save();
+      const payload = {
+        id: newUser._id,
+      };
+      const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "24h" });
+      await User.findByIdAndUpdate(newUser._id, token)
       const avatarFolder = path.join(avatarDir, String(newUser._id));
       await fs.mkdir(avatarFolder);
-      return res.redirect(`${process.env.FRONTEND_URL}/home?token=${token}`);
+      return res.redirect(`${FRONTEND_URL}?token=${token}`);
     }
   } catch (error) {
     next(error.message);
