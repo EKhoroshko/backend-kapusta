@@ -13,8 +13,8 @@ const { userValidation } = require("../../midlewares/validation/user");
 const { authValidation } = require("../../midlewares/auth/authValidation");
 // const upload = require("../../midlewares/auth/upload");
 const { userLogin } = require("../../midlewares/validation/userLogin");
-// const googleAuth = require("../../controllers/auth/googleAuth");
-// const googleRedirect = require("../../controllers/auth/googleRedirect");
+const googleAuth = require("../../controllers/auth/googleAuth");
+const googleRedirect = require("../../controllers/auth/googleRedirect");
 const verifyValidation = require("../../midlewares/validation/verify");
 
 router.post("/users/register", userValidation, register);
@@ -33,7 +33,7 @@ router.get("/users/current", authValidation, getCurrenUser);
 // );
 
 // GOOGLE AUTH
-// router.get("/google", googleAuth);
-// router.get("/google-redirect", googleRedirect);
+router.get("/google", googleAuth);
+router.get("/google-redirect", googleRedirect);
 
 module.exports = router;
