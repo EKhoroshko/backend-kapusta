@@ -6,7 +6,7 @@ const Joi = require("joi");
 const transactionsValidate = (req, res, next) => {
   const schema = Joi.object({
     sum: Joi.number().required(),
-
+    date: Joi.string(),
     category: Joi.string().required(),
     transactionType: Joi.string().required(),
     description: Joi.string(),
