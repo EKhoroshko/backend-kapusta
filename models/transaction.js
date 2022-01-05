@@ -8,9 +8,11 @@ const transactionSchema = Schema(
       type: String,
       required: [true, "Set name for category"],
     },
+    label: {
+      type: String,
+    },
     description: {
       type: String,
-      // required: [true, "Description is required"],
     },
     date: {
       type: String,
@@ -34,7 +36,6 @@ const transactionSchema = Schema(
       enum: ["incomes", "costs"],
     },
     owner: {
-      // eslint-disable-next-line no-undef
       type: Schema.Types.ObjectId,
       ref: "user",
     },
