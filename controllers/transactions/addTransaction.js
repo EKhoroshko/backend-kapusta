@@ -4,7 +4,6 @@
 // const addContact = require("../../model/contacts/addContact");
 const { Transaction } = require("../../models");
 const addTransaction = async (req, res, next) => {
-  console.log(req.body);
   try {
     const date = req.body.date.split('.');
     const currentDate = date.join('/');

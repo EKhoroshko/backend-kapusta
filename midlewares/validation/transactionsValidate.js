@@ -10,6 +10,7 @@ const transactionsValidate = (req, res, next) => {
     category: Joi.string().required(),
     transactionType: Joi.string().required(),
     description: Joi.string(),
+    label: Joi.string(),
   });
   const validationResult = schema.validate(req.body);
   if (validationResult.error) {
