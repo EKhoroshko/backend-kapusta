@@ -51,6 +51,7 @@ const googleRedirect = async (req, res, next) => {
         userName: userData.data.name,
         avatarURL,
         verify: true,
+        isLogin: true,
       });
       const payload = {
         id: newUser._id,
