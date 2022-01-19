@@ -9,7 +9,6 @@
 //const bcrypt = require("bcryptjs");
 //const jwt = require("jsonwebtoken");
 const fs = require("fs/promises");
-const { url } = require("inspector");
 const path = require("path");
 const Jimp = require("jimp");
 const { User } = require("../../models");
@@ -18,13 +17,8 @@ const avatarDir = path.join(__dirname, "../../public/avatars");
 
 const updateAvatar = async (req, res, next) => {
   const { path: tempUpload, originalname } = req.file;
+  const { id } = req.user;
   try {
-    const { id } = req.user;
-    const user = await User.findById(id);
-    if (!user) {
-      res.status(401).json({ message: "Not authorized" });
-    }
-
     const resultUpload = path.join(avatarDir, id, `${id}${originalname}`);
     Jimp.read(resultUpload, (err, image) => {
       if (err) throw err;
