@@ -8,7 +8,7 @@ const logout = require("../../controllers/auth/logout");
 const verifyResending = require("../../controllers/auth/verifyResending");
 const verify = require("../../controllers/auth/verify");
 const getCurrenUser = require("../../controllers/auth/getCurrenUser");
-const updateAvatar = require("../../controllers/auth/udateAvatar");
+const updateAvatar = require("../../controllers/auth/updateAvatar");
 const { userValidation } = require("../../midlewares/validation/user");
 const { authValidation } = require("../../midlewares/auth/authValidation");
 const upload = require("../../midlewares/auth/upload");
@@ -29,7 +29,7 @@ router.get("/users/current", authValidation, getCurrenUser);
 router.patch(
   "/users/avatars",
   authValidation,
-  upload.single("avatarURL"),
+  upload.single("avatar"),
   updateAvatar
 );
 
