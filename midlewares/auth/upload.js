@@ -4,14 +4,14 @@
 /* eslint-disable semi */
 const multer = require("multer");
 const path = require("path");
-const tempDir = path.join(__dirname, "../", "temp");
+const tempDir = path.join(__dirname, "../../", "temp");
 
 const uploadConfig = multer.diskStorage({
-  distination: (req, file, cb) => {
+  destination: (req, file, cb) => {
     cb(null, tempDir);
   },
   filename: (req, file, cb) => {
-    cb(null, file.originalname);
+    cb(null, Date.now() + '-' + file.originalname)
   },
   // limits: {
   //   fileSize: 2048,
