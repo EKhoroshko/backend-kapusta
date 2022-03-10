@@ -28,6 +28,7 @@ const login = async (req, res, next) => {
         id: user._id,
         balance: user.balance,
         avatarURL: user.avatarURL,
+        verify: user.verify,
       },
     });
   } catch (error) {
