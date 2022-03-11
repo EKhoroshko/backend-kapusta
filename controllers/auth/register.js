@@ -30,7 +30,7 @@ const register = async (req, res, next) => {
     const mail = {
       to: email,
       subject: "Подтверждение регистрации",
-      html: `<a href="${FRONTEND_URL}/${verificationToken}">
+      html: `<a href="${FRONTEND_URL}/verify/${verificationToken}">
           Спасибо, что зарегистрировались. Перейдите пожалуйста по данной ссылке для подтверждения имейла
         </a>`,
     };
