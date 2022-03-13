@@ -9,10 +9,11 @@
 const { User } = require("../../models");
 
 const updateAvatar = async (req, res, next) => {
-  const { id } = req.user
+  const { _id } = req.user
   const { avatarURL } = req.body;
   try {
-    const user = await User.findByIdAndUpdate(id, { avatarURL: avatarURL }, { new: true })
+    const user = await User.findByIdAndUpdate(_id, { avatarURL: avatarURL }, { new: true })
+    console.log(user);
     if (!user) {
       return res.status(404).json({ message: 'Not Found' })
     }
