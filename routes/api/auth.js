@@ -11,7 +11,6 @@ const getCurrenUser = require("../../controllers/auth/getCurrenUser");
 const updateAvatar = require("../../controllers/auth/updateAvatar");
 const { userValidation } = require("../../midlewares/validation/user");
 const { authValidation } = require("../../midlewares/auth/authValidation");
-const upload = require("../../midlewares/auth/upload");
 const { userLogin } = require("../../midlewares/validation/userLogin");
 const googleAuth = require("../../controllers/auth/googleAuth");
 const googleRedirect = require("../../controllers/auth/googleRedirect");
@@ -29,7 +28,6 @@ router.get("/users/current", authValidation, getCurrenUser);
 router.patch(
   "/users/avatars",
   authValidation,
-  upload.single("avatar"),
   updateAvatar
 );
 
