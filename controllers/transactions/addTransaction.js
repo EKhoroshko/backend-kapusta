@@ -9,18 +9,18 @@ const addTransaction = async (req, res, next) => {
     const currentDate = date.join('/');
     const currentMonth = +date[1];
     const month = [
-      "Январь",
-      "Февраль",
-      "Март",
-      "Апрель",
-      "Май",
-      "Июнь",
-      "Июль",
-      "Август",
-      "Сентябрь",
-      "Октябрь",
-      "Ноябрь",
-      "Декабрь",
+      "Січень",
+      "Лютий",
+      "Березень",
+      "Квітень",
+      "Травень",
+      "Червень",
+      "Липень",
+      "Серпень",
+      "Вересень",
+      "Жовтень",
+      "Листопад",
+      "Грудень",
     ];
     const nowMonth = month[currentMonth - 1];
     const currentYear = +date[2];
